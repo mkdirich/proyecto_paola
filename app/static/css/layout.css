@@ -1,0 +1,64 @@
+/* Estilo para el cuerpo */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Encabezados */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    color: #2c3e50;
+}
+
+/* Enlaces */
+a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #3498db;
+}
+
+/* Botones */
+button {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Open Sans', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #3498db;
+}
+
+/* Contenedores */
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Tarjetas */
+.card {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    padding: 20px;
+}
+
+/* Ejemplo de clases para texto */
+.text-primary {
+    color: #2980b9;
+}
+
+.text-secondary {
+    color: #7f8c8d;
+}

@@ -1,0 +1,33 @@
+{% extends './layout.html' %}
+
+{% block title %}{{ data.titulo }}{% endblock %}
+
+{% block body %}
+<h1 class="titulo">{{ data.titulo }}</h1>
+<h2 class="bienvenida">{{ data.bienvenida }}</h2>
+    {% if data.numero_nineras > 0 %}
+    <ul class="lista-nineras">
+        {% for x in data.nineras %}
+        <li class="item-ninera">Niñera: {{ x }}</li>
+        {% endfor %}
+        <h2 class="conteo-nineras">Número de niñeras: {{ data.numero_nineras }}</h2>
+    </ul>
+
+    <section class="lista-items">
+        {% for item in items %}
+        <article class="item">
+            <figure class="item-figure">
+                <img src="{{ item.imagen_url }}" alt="Imagen de {{ item.nombre_ninera }}" class="item-imagen">
+                <figcaption class="item-caption">
+                    <h3 class="item-titulo">{{ item.nombre_ninera }}</h3>
+                    <p class="item-descripcion">{{ item.descripcion }}</p>
+                </figcaption>
+            </figure>
+            <a href="{{ url_for('nineras', nombre=item.nombre_ninera) }}" class="item-boton">Conocela</a>
+        </article>
+        {% endfor %}
+    </section>
+    {% else %}
+    <h2 class="no-nineras">No tenemos niñeras en este momento...</h2>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,116 @@
+/* Estilos para la página niñeras.html */
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.titulo {
+    font-family: 'Roboto', sans-serif;
+    color: #2c3e50;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.profile-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-figure {
+    margin: 0;
+}
+
+.profile-imagen {
+    max-width: 200px;
+    border-radius: 50%;
+}
+
+.profile-caption {
+    margin-top: 10px;
+}
+
+.profile-descripcion {
+    font-size: 1em;
+    color: #7f8c8d;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    padding: 10px 20px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.action-btn:hover {
+    background-color: #3498db;
+}
+
+.form-agregar, .form-quitar {
+    width: 45%;
+}
+
+.form-agregar h2, .form-quitar h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.form-agregar input, .form-quitar input, .form-agregar select, .form-quitar select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #2ecc71;
+}
+
+.records {
+    margin-top: 40px;
+}
+
+.records h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.records-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.records-table th, .records-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.records-table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.records-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
