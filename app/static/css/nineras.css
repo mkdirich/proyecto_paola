@@ -1,116 +1,75 @@
-/* Estilos para la página niñeras.html */
+/* Estilos para mantener compatibilidad */
 
-.container {
-    width: 80%;
-    margin: 0 auto;
+/* Encabezado */
+header {
+    background-color: #2980b9;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.titulo {
+header h1 {
     font-family: 'Roboto', sans-serif;
-    color: #2c3e50;
-    text-align: center;
-    margin-top: 20px;
 }
 
-.profile-section {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.profile-figure {
-    margin: 0;
-}
-
-.profile-imagen {
-    max-width: 200px;
-    border-radius: 50%;
-}
-
-.profile-caption {
-    margin-top: 10px;
-}
-
-.profile-descripcion {
-    font-size: 1em;
-    color: #7f8c8d;
-}
-
-.actions {
+/* Contenedor principal */
+main {
+    flex: 1;
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    gap: 1.5rem;
 }
 
-.action-btn {
-    padding: 10px 20px;
+/* Controles (Botones) */
+.controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.controls button {
     background-color: #2980b9;
     color: white;
     border: none;
     border-radius: 5px;
+    padding: 10px 20px;
+    font-family: 'Open Sans', sans-serif;
     cursor: pointer;
-    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
-.action-btn:hover {
+.controls button:hover {
     background-color: #3498db;
 }
 
-.form-agregar, .form-quitar {
-    width: 45%;
-}
-
-.form-agregar h2, .form-quitar h2 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-}
-
-.form-agregar input, .form-quitar input, .form-agregar select, .form-quitar select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
+/* Contenido central */
+.content {
+    width: 90%;
+    max-width: 800px;
+    min-height: 300px;
+    border: 2px dashed #2980b9;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.submit-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #27ae60;
+.placeholder {
+    font-size: 1.2rem;
+    color: #7f8c8d; 
+    text-align: center;
+}
+
+footer {
+    background-color: #2980b9;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.submit-btn:hover {
-    background-color: #2ecc71;
-}
-
-.records {
-    margin-top: 40px;
-}
-
-.records h2 {
     text-align: center;
-    margin-bottom: 20px;
-}
-
-.records-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.records-table th, .records-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-.records-table th {
-    background-color: #f2f2f2;
-    color: #333;
-}
-
-.records-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+    padding: 0.5rem 0;
+    margin-top: auto;
+    font-family: 'Open Sans', sans-serif;
 }

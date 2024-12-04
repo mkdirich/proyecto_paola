@@ -1,40 +1,41 @@
+#IMPORTAMOS LAS LIBRERIAS NECESARIAS PARA EL PROYECTO
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import psycopg2
+from psycopg2.extensions import AsIs
+#---------------------------------------------------------------------
 
-app = Flask(__name__)
-
-#Configurar la base de datos
-
+# CONFIGURAR LA BASE DE DATOS 
 def db_paola():
     return psycopg2.connect(
-        dbname="paola",
+        dbname="nineras",
         user="postgres",
         password="Abcd128910",
         host="localhost"
-    )
-    
-def consultar_registros(tabla):
+    )  
+#---------------------------------------------------------------------
+
+app = Flask(__name__)
+
+#CONSULTAS Y MODIFICACIONES A LA BASE DE DATOS
+def consultar_registros(nombre):
+    connection = None
     try:
         connection = db_paola()
-        
-        tablas_permitidas = ['paola', 'maria', 'carmen']
-        if tabla not in tablas_permitidas:
-            raise ValueError("El nombre de la tabla no está permitido.")
-        
+
         with connection.cursor() as cursor:
-            sql = f"SELECT * FROM {tabla}"
-            cursor.execute(sql)
+            cursor.execute("SELECT * FROM %s", (AsIs(nombre),))
             consulta = cursor.fetchall()
-            for x in consulta:
-                print(x)
+            return consulta
     except Exception as e:
-        print("Ocurrio un error inesperado")
+        print("Ocurrió un error inesperado:", e)
+        return []
     finally:
         if connection:
             connection.close()
+ #---------------------------------------------------------------------
             
-
+#ESTABLECEMOS RUTAS Y RENDERIZAMOS UN ARCHIVO HTML
 @app.route('/')
 def home():
     lista_nineras = ['Paola', 'Maria', 'Carmen']
@@ -58,39 +59,35 @@ def home():
             'boton': f'Conoce a {lista_nineras[2]}'
         }
     ]
-    data={
+    data = {
         'titulo': 'Niñeras',
-        'bienvenida': 'Bienvenidos, aqui puede revisar el historial de cualquiera de nuestras niñeras',
-        'nineras' : lista_nineras,
-        'numero_nineras' : len(lista_nineras)
+        'bienvenida': 'Bienvenidos, aquí puede revisar el historial de cualquiera de nuestras niñeras',
+        'nineras': lista_nineras,
+        'numero_nineras': len(lista_nineras)
     }
     return render_template("index.html", data=data, items=items)
 
-@app.before_request
-def before_request():
-    print("Antes de la peticion")
-    
-@app.after_request
-def after_request(response):
-    print("Despues de la peticion")
-    return response
-
-@app.route('/consultar_niño/<nombre>') 
-def consultar_niño(nombre): 
-    # Lógica para consultar niños
-    return render_template("consultar_niño.html", nombre=nombre)
-
 @app.route('/nineras/<nombre>')
 def nineras(nombre):
+    registros = consultar_registros(nombre)
+    print(registros) 
+    name_column ={
+        'paola': ['#', 'nombre', 'edad', 'ciudad', 'sexo', 'ninera_id'],
+        'maria': ['#', 'nombre', 'edad', 'ciudad', 'sexo', 'ninera_id'],
+        'carmen': ['#', 'nombre', 'edad', 'ciudad', 'sexo', 'ninera_id']
+    }
+    columnas = name_column.get(nombre.lower(), [])
     detalle_ninera = {
         'nombre': nombre,
-        'descripcion': 'Esta es la ninera ' + nombre,
+        'descripcion': 'Esta es la niñera ' + nombre,
         'imagen_url': f'static/img/{nombre.lower()}.jpg'
     }
-    data={
-        'titulo': 'nineras',
+    data = {
+        'titulo': 'niñeras',
         'nombre': nombre,
-        'detalle_ninera': detalle_ninera
+        'detalle_ninera': detalle_ninera,
+        'registros': registros,
+        'columnas': columnas
     }
     return render_template("nineras.html", data=data)
 
@@ -98,12 +95,12 @@ def query_string():
     print(request)
     print(request.args)
     print(request.args.get('param1'))
-    return "Muy bien "
+    return "Muy bien"
 
 def pagina_no_encontrada(error):
-    data={
+    data = {
         'titulo': 'no encontrado',
-        'descripcion': 'La pagina a la que intenta acceder no se encontro por favor revise su busqueda'
+        'descripcion': 'La página a la que intenta acceder no se encontró, por favor revise su búsqueda'
     }
     return render_template('404.html', data=data), 404
 
@@ -111,4 +108,3 @@ if __name__ == '__main__':
     app.add_url_rule('/query_string', view_func=query_string)
     app.register_error_handler(404, pagina_no_encontrada)
     app.run(debug=True)
-    

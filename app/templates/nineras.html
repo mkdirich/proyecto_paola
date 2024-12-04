@@ -1,7 +1,48 @@
 {% extends './layout.html' %}
 
-{% block title %}{{ data.titulo }}{% endblock %}
+{% block title %}Niñeras - {{ data.nombre }}{% endblock %}
 
-{%block body%}
-<h1>{{ data.nombre }}</h1>
+{% block body %}
+<header>
+    <h1>Registros de {{ data.nombre }}</h1>
+</header>
+<main>
+    <div class="button-group">
+        <button id="mostrar" class="btn btn-primary">Mostrar registros</button>
+        <button id="ocultar" class="btn btn-secondary">Ocultar registros</button>
+        <button id="anadir" class="btn btn-success">Añadir registro</button>
+        <button id="borrar" class="btn btn-danger">Borrar registros</button>
+    </div>
+    <div class="content">
+        {% if data.registros %}
+            <div id="registros-tabla">
+                <table>
+                    <thead>
+                        <tr>
+                            {% for col in data.columnas %}
+                                <th>{{ col }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in data.registros %}
+                            <tr>
+                                {% for valor in registro %}
+                                    <td>{{ valor }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="placeholder">No hay registros disponibles para {{ data.nombre }}.</p>
+        {% endif %}
+    </div>
+</main>
+<footer>
+    <p>© 2024 - Aplicación de Registros</p>
+</footer>
+
+
 {% endblock %}
