@@ -6,7 +6,7 @@ from psycopg2.extensions import AsIs
 #---------------------------------------------------------------------
 
 # CONFIGURAR LA BASE DE DATOS 
-def db_paola():
+def db():
     return psycopg2.connect(
         dbname="nineras",
         user="postgres",
@@ -21,7 +21,7 @@ app = Flask(__name__)
 def consultar_registros(nombre):
     connection = None
     try:
-        connection = db_paola()
+        connection = db()
 
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM %s", (AsIs(nombre),))
@@ -30,6 +30,20 @@ def consultar_registros(nombre):
     except Exception as e:
         print("Ocurrió un error inesperado:", e)
         return []
+    finally:
+        if connection:
+            connection.close()
+            
+def agregar_registros(nombre, id, name, edad, ciudad, sexo, ninera_id):
+    connection = None
+    try:
+        connection=db()
+        with connection.cursor() as cursor:
+            sql= f"INSERT INTO {nombre} (id, nombre, edad, ciudad, sexo, ninera_id) VALUES (%s, %s, %s, %s, %s, %s)"
+            cursor.execute(sql, (id,name,edad,ciudad,sexo,ninera_id))
+            connection.commit()
+    except Exception as e:
+        print(f"ocurrio un error inesperado{e}")
     finally:
         if connection:
             connection.close()
@@ -90,6 +104,29 @@ def nineras(nombre):
         'columnas': columnas
     }
     return render_template("nineras.html", data=data)
+
+@app.route('/nineras/<nombre>/add', methods=['POST'])
+def agregar_registro(nombre):
+    # Obtener los datos del formulario
+    id = request.form.get('id')
+    nombre_registro = request.form.get('nombre')
+    edad = request.form.get('edad')
+    ciudad = request.form.get('ciudad')
+    sexo = request.form.get('sexo')
+    ninera_id = request.form.get('ninera_id')
+
+    # Validar que todos los campos estén completos
+    if not all([id, nombre_registro, edad, ciudad, sexo, ninera_id]):
+        return {"mensaje": "Datos incompletos"}, 400
+
+    try:
+        # Llamar a la función para agregar los registros
+        agregar_registros(nombre, id, nombre_registro, edad, ciudad, sexo, ninera_id)
+        return {"mensaje": f"Registros añadidos con éxito a la tabla {nombre}."}, 200
+    except Exception as e:
+        print(f"Error al agregar registros: {e}")
+        return {"mensaje": f"Error al agregar registros a {nombre}."}, 500
+
 
 def query_string():
     print(request)

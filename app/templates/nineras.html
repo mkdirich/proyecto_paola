@@ -13,9 +13,11 @@
         <button id="anadir" class="btn btn-success">Añadir registro</button>
         <button id="borrar" class="btn btn-danger">Borrar registros</button>
     </div>
+
+
     <div class="content">
         {% if data.registros %}
-            <div id="registros-tabla">
+            <div id="registros-tabla" class="scrollable-table">
                 <table>
                     <thead>
                         <tr>
@@ -25,7 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for registro in data.registros %}
+                        {% for registro in data.registros %} <!-- Limitar a los primeros 6 registros -->
                             <tr>
                                 {% for valor in registro %}
                                     <td>{{ valor }}</td>
@@ -39,6 +41,27 @@
             <p class="placeholder">No hay registros disponibles para {{ data.nombre }}.</p>
         {% endif %}
     </div>
+
+    <div id="form-agregar" style="display: none; margin-top: 20px;">
+        <form id="form-nuevo-registro" method="POST" action="/nineras/{{ data.nombre }}/add">
+            <!-- Campo para ID -->
+            <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" id="id" name="id" class="form-control" required>
+            </div>
+    
+            <!-- Generar dinámicamente los demás campos -->
+            {% for col in data.columnas[1:] %} <!-- Ignoramos el primer campo (#) -->
+                <div class="form-group">
+                    <label for="{{ col }}">{{ col.capitalize() }}</label>
+                    <input type="text" id="{{ col }}" name="{{ col }}" class="form-control" required>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success">Enviar</button>
+        </form>
+    </div>
+
+    <div id="mensaje"></div>
 </main>
 <footer>
     <p>© 2024 - Aplicación de Registros</p>
